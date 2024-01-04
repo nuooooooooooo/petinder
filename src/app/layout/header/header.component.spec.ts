@@ -20,4 +20,7 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should create a title', () => {
+    expect(component.title).toEqual("Petinder")
+  })
 });

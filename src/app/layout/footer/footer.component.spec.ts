@@ -5,6 +5,7 @@ import { FooterComponent } from './footer.component';
 describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
+  let currentYear : number;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,5 +20,9 @@ describe('FooterComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should display the curent year', () => {
+    currentYear = new Date().getFullYear();
+    expect(component.year).toEqual(currentYear);
   });
 });

@@ -8,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  private _title: string
 
+  constructor() {
+    this._title = "Petinder"
+  }
+
+  get title(): string {
+    return this._title;
+  }
 }
