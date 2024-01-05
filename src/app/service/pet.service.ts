@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
+import {Pet} from "../model/pet";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class PetService {
    }
 
   getPets() : Observable<any> {
-    return this.httpClient.get(this.apiUrl)
+    return this.httpClient.get<Pet []>(this.apiUrl).pipe(
+      map(pets => pets.sort((x,y) => x.name.toLowerCase().localeCompare(y.name.toLowerCase())))
+    )
   }
 }
