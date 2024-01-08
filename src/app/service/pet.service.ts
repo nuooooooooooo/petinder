@@ -20,7 +20,7 @@ export class PetService {
     )
   }
 
-  addPet(pet: Pet | any) : Observable<any> {
-    return this.httpClient.post(this.apiUrl, pet)
+  addPet(pet: Pet) : Observable<Pet> {
+    return this.httpClient.post<Pet>(this.apiUrl, pet)
   }
 }
