@@ -19,4 +19,8 @@ export class PetService {
       map(pets => pets.sort((x,y) => x.name.toLowerCase().localeCompare(y.name.toLowerCase())))
     )
   }
+
+  addPet(pet: Pet | any) : Observable<any> {
+    return this.httpClient.post(this.apiUrl, pet)
+  }
 }

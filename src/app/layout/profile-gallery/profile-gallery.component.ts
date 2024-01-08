@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { PetService } from '../../service/pet.service';
-import { Pet } from '../../model/pet';
-import { NgFor, NgIf } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {PetService} from '../../service/pet.service';
+import {Pet} from '../../model/pet';
+import {NgFor, NgIf} from '@angular/common';
 import {NameFilterPipe} from "../../pipes/name-filter.pipe";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-profile-gallery',
   standalone: true,
-  imports: [NgFor, NgIf, NameFilterPipe, FormsModule],
+  imports: [NgFor, NgIf, NameFilterPipe, FormsModule, ReactiveFormsModule],
   templateUrl: './profile-gallery.component.html',
   styleUrl: './profile-gallery.component.css',
 })
@@ -16,8 +16,18 @@ export class ProfileGalleryComponent implements OnInit {
   pets: Pet[];
   selectedPet: Pet;
   searchText: string;
+  petForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    kind: ['', Validators.required],
+    image:['', Validators.required],
+    profileText:['', Validators.required],
+    popularity:['', Validators.required]
+  });
 
-  constructor(private petService: PetService) {
+  constructor(
+    private petService: PetService,
+    private formBuilder: FormBuilder
+  ) {
   }
 
   ngOnInit(): void {
@@ -30,5 +40,17 @@ export class ProfileGalleryComponent implements OnInit {
 
   selectPet(pet: Pet) {
     this.selectedPet = pet
+  }
+
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.petForm.value);
+
+    this.petService.addPet(this.petForm.value).subscribe(
+      data => {
+          console.log(data);
+          this.getPets();
+      });
+    this.petForm.reset();
   }
 }

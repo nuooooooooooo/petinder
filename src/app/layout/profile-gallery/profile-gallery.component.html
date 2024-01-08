@@ -8,7 +8,7 @@
              [class.active]="selectedPet?.id == pet.id"
         >
           <img class="profile-picture"
-               [src]="'https://pettinder.herokuapp.com/'+ pet.image" alt="pet profile picture"
+               [src]="pet.image.startsWith('https:') ? pet.image : 'https://pettinder.herokuapp.com/' + pet.image"
           >
           <div class="overlay">
             <div class="overlay-text">{{pet.name}}</div>
@@ -35,6 +35,30 @@
                  class="form-control"
                  placeholder="Name"
                  [(ngModel)]="searchText">
+        </div>
+      </section>
+      <section class="tiny-dialog fader" id="petForm">
+        <div class="form-group">
+          <h3>Add your pet</h3>
+          <form (ngSubmit)="onSubmit()" [formGroup]="petForm">
+            <label for="pet-name">Name: </label>
+            <input type="text" id="pet-name" formControlName="name" class="form-control">
+
+            <label for="pet-kind">Kind: </label>
+            <input type="text" id="pet-kind" formControlName="kind" class="form-control">
+
+            <label for="pet-image">Image URL: </label>
+            <input type="text" id="pet-image" formControlName="image" class="form-control">
+
+            <label for="pet-description">Profile Description: </label>
+            <input type="text" id="pet-description" formControlName="profileText" class="form-control">
+
+            <label for="pet-popularity">Profile Popularity: </label>
+            <input type="number" id="pet-popularity" formControlName="popularity" class="form-control">
+            <p>Complete the form to enable button.</p>
+            <button type="submit" [disabled]="!petForm.valid">Submit</button>
+
+          </form>
         </div>
       </section>
     </div>
