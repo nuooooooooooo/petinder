@@ -20,7 +20,15 @@ export class PetService {
     )
   }
 
+  getPetByName(name: String) : Observable<Pet> {
+    return this.httpClient.get<Pet>(`${this.apiUrl}/${name}`)
+  }
+
   addPet(pet: Pet) : Observable<Pet> {
     return this.httpClient.post<Pet>(this.apiUrl, pet)
+  }
+
+  deletePet(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.apiUrl}/${id}`)
   }
 }

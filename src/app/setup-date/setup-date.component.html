@@ -1,1 +1,16 @@
-<p>setup-date works!</p>
+<div class="col-md-3 big-dialog" *ngIf="pet; else elseBlock">
+    <img class="img-circle img-responsive"
+         [src]="pet.image.startsWith('https:') ? pet.image : 'https://pettinder.herokuapp.com/' + pet.image">
+    <h1>{{pet.name}}</h1>
+    <p>{{pet.profileText}}</p>
+    <div class="dialog-centered">
+        <a type="button"
+           class="btn btn-primary btn-lg dialog-centered"
+        >
+            Setup date
+        </a>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <p>Loading pet...</p>
+</ng-template>

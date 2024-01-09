@@ -24,6 +24,15 @@
         >
           <h3>{{selectedPet.name}}</h3>
           <p>{{selectedPet.profileText}}</p>
+          <button
+                  (click)="deletePet(selectedPet.id)"
+          >Delete</button>
+
+          <button
+                 [routerLink]="['/setup-date', selectedPet.name] "
+          >Date</button>
+
+
         </section>
       </div>
       <section class="tiny-dialog">
@@ -56,7 +65,7 @@
             <label for="pet-popularity">Profile Popularity: </label>
             <input type="number" id="pet-popularity" formControlName="popularity" class="form-control">
             <p>Complete the form to enable button.</p>
-            <button type="submit" [disabled]="!petForm.valid">Submit</button>
+            <button type="submit" [disabled]="!petForm.valid" >Submit</button>
 
           </form>
         </div>

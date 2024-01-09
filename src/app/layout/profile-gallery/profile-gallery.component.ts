@@ -5,17 +5,18 @@ import {NgFor, NgIf} from '@angular/common';
 import {NameFilterPipe} from "../../pipes/name-filter.pipe";
 import {FormsModule, FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {PetMapper} from "../../mapper/pet.mapper";
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-profile-gallery',
     standalone: true,
-    imports: [NgFor, NgIf, NameFilterPipe, FormsModule, ReactiveFormsModule],
+    imports: [NgFor, NgIf, NameFilterPipe, FormsModule, ReactiveFormsModule, RouterLink],
     templateUrl: './profile-gallery.component.html',
     styleUrl: './profile-gallery.component.css',
 })
 export class ProfileGalleryComponent implements OnInit {
     pets: Pet[];
-    selectedPet: Pet;
+    selectedPet: Pet | null;
     searchText: string;
     petForm = this.formBuilder.group({
         name: ['', Validators.required],
@@ -27,7 +28,7 @@ export class ProfileGalleryComponent implements OnInit {
 
     constructor(
         private petService: PetService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
     ) {
     }
 
@@ -41,6 +42,18 @@ export class ProfileGalleryComponent implements OnInit {
 
     selectPet(pet: Pet) {
         this.selectedPet = pet
+    }
+
+    deletePet(id: number) {
+
+        this.petService.deletePet(id).subscribe(
+            data => {
+                console.warn(data);
+                this.getPets();
+                this.selectedPet = null;
+            }
+        )
+
     }
 
     onSubmit() {
